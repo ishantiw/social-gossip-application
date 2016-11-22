@@ -38,3 +38,17 @@ include.init rnd pinit
 ###To print out results and observe values
 control.ao it.osn.core.UserProfileDissemination
 control.ao.protocol osn
+
+#removing 50 nodes from cycle 2 to 8
+control.dnet DynamicNetwork
+control.dnet.add -50
+control.dnet.minsize 1400
+control.dnet.from 2
+control.dnet.until 8
+ 
+#adding 50 nodes from cycle 12 to 18
+control.dnet1 DynamicNetwork
+control.dnet1.add 50
+control.dnet1.maxsize 10000
+control.dnet1.from 12
+control.dnet1.until 18
