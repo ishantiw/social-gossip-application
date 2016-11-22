@@ -1,0 +1,48 @@
+# Social Gossip: Script to build graph using Watts & strogatz model in dynamic setting
+
+#Uncomment to have same results every time
+#random.seed 1234567890
+
+simulation.cycles 20
+
+control.shf Shuffle
+
+#change the network size according to your needs
+network.size 50000
+
+protocol.lnk IdleProtocol
+
+#Social Gossip Algorithm: Chose values for oneHopSize(5 to 20), dissemination strategy(push, pull and pushpull), peerListSize(5 to 100) 
+protocol.osn it.osn.core.SocialNetworkCalculations
+protocol.osn.linkable lnk
+protocol.osn.exp random
+protocol.osn.peak_interest 999
+protocol.osn.oneHopSize 20
+protocol.osn.type pushpull
+protocol.osn.peerListSize 10
+
+####Watts-Strogatz model The Watts & Strogatz model is a random graph 
+####generation model that produces graphs with small-world properties,###
+####including short average path lengths and high clustering.###
+#Chose Beta value(probablity of re-wiring nodes with other nodes),
+value of degree(k) which each node will have initially#
+init.rnd WireWS
+init.rnd.protocol lnk
+init.rnd.beta 0.7
+init.rnd.k 5
+init.rnd.undir false
+
+###Using OSN Parameters Initializer
+init.pinit it.osn.core.OSNParametersInitializer
+init.pinit.protocol osn
+init.pinit.max 10
+init.pinit.min 0
+
+#To use OSNParametersInitializer for initialization 
+include.init rnd pinit
+
+###To print out clustering coefficient sampled over 100 nodes (prints NaN if any node is unreachable)
+control.ao peersim.reports.GraphStats
+control.ao.protocol lnk
+control.ao.undir
+control.ao.nc 100

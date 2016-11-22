@@ -1,0 +1,43 @@
+# Social Gossip: Script to build graph using FacebookDataset in dynamic setting: 
+# To print CLustering coefficient
+
+#Uncomment to have same results every time
+#random.seed 1234567890
+
+simulation.cycles 20
+
+control.shf Shuffle
+
+#change the network size according to your needs(facebook datset has only 4039 nodes)
+network.size 4039
+
+protocol.lnk IdleProtocol
+
+#Social Gossip Algorithm: Chose values for oneHopSize(5 to 20), dissemination strategy(push, pull and pushpull), peerListSize(5 to 100) 
+protocol.osn it.osn.core.SocialNetworkCalculations
+protocol.osn.linkable lnk
+protocol.osn.exp random
+protocol.osn.peak_interest 999
+protocol.osn.oneHopSize 20
+protocol.osn.type pushpull
+protocol.osn.peerListSize 10
+
+init.rnd WireFromFile
+init.rnd.protocol lnk
+init.rnd.file Dataset/facebookGraph.txt
+init.rnd.undir true
+
+###Using OSN Parameters Initializer
+init.pinit it.osn.core.OSNParametersInitializer
+init.pinit.protocol osn
+init.pinit.max 10
+init.pinit.min 0
+
+#To use OSNParametersInitializer for initialization 
+include.init rnd pinit
+
+###To print out clustering coefficient sampled over 50 nodes (prints NaN if any node is unreachable)
+control.ao peersim.reports.GraphStats
+control.ao.protocol lnk
+control.ao.undir
+control.ao.nc 50
