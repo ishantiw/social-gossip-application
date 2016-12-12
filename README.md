@@ -12,9 +12,10 @@ This repository is an example to use Social Gossip.
 - goto "main" tab, select the project(name of this project). select `peersim.Simulator` for "Main Class" option
 - goto "arguments" tab, to run a particular script add `OSNexperiments/<script-name>`. For example, `OSNexperiments/SocialGossip_WattsModel_Dynamic.txt`
 - "Run" this configuration
+
 ## Results
 
-Initially, you will be having a graph nodes and edges as below from the selected dataset.
+Initially, you will be having a graph nodes and edges as below from the selected dataset. Also you will see global values of the graph with alert to events on the console.
 
 ![Initial graph](https://cloud.githubusercontent.com/assets/9600691/21100943/ea0a0ff0-c076-11e6-9e18-e4bfa9cbb053.png)
 
